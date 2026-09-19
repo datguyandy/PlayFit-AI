@@ -1,4 +1,3 @@
-from matplotlib import scale
 import pygame
 from actions import Actions
 
@@ -51,7 +50,7 @@ class Fighter():
                 IDLE: "assets/sprites/Fighter2/Bot-IDLE.png",
                 PUNCH: "assets/sprites/Fighter2/Bot-punch.png",
                 KICK: "assets/sprites/Fighter2/Bot-kick.png",
-                WIN: "assets/sprites/Fighter1/Shinchan-win.png",
+                WIN: "assets/sprites/Fighter2/Bot-IDLE.png", #no bot win sprite yet
                 DEAD: "assets/sprites/Fighter2/Bot-over.png",
             }
         else:

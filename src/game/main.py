@@ -120,7 +120,8 @@ def reset_game():
     fighter1 = Fighter(200, 310, variant = "player")
     fighter2 = FighterAI(700, 310)
     game_state = PLAYING
-    winner = Nonegame_over_time = None
+    winner = None
+    game_over_time = None
 
 #create fighter instance
 fighter1 = Fighter(200, 310, variant="player")
@@ -168,7 +169,8 @@ while run:
             if results.pose_landmarks:
                 landmarks = results.pose_landmarks.landmark
             
-                detected_actions = action_detector.update(landmarks, fighter2.rect.centerx)
+                facing = "right" if fighter2.rect.centerx > fighter1.rect.centerx else "left"
+                detected_actions = action_detector.update(landmarks, facing)
 
                 #convert detected actions to Actions instance
                 for action in detected_actions:
@@ -178,6 +180,7 @@ while run:
                         actions_p1.kick = True
                     elif action == "JUMP":
                         actions_p1.jump = True
+                    #frame is mirrored, so mediapipe's LEFT landmarks are the player's right side
                     elif action == "MOVE_LEFT":
                         actions_p1.movex = 1
                     elif action == "MOVE_RIGHT":
@@ -204,7 +207,12 @@ while run:
     screen.blit(ko_img, (KO_X, KO_Y))
 
     if game_state == PLAYING:
-        #actions_p1 = get_actions_player1()
+        #keyboard fallback (works without a webcam)
+        actions_kb = get_actions_player1()
+        actions_p1.movex = actions_p1.movex or actions_kb.movex
+        actions_p1.punch = actions_p1.punch or actions_kb.punch
+        actions_p1.kick = actions_p1.kick or actions_kb.kick
+        actions_p1.jump = actions_p1.jump or actions_kb.jump
 
         fighter1.movex(actions_p1, fighter2)
         fighter1.movey(actions_p1)

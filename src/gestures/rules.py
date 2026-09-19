@@ -27,7 +27,7 @@ class ActionDetector:
         dy = history[-1][1] - history[0][1]
         return (dx, dy)
 
-    def update(self, landmarks, fighter2_x = None):
+    def update(self, landmarks, facing = None):
 
         actions = []
 
@@ -42,11 +42,7 @@ class ActionDetector:
         hip_c = avg(lh, rh)
         sh_c = avg(ls, rs)
 
-        #facing based on opponent
-        if fighter2_x is not None:
-            facing = "right" if fighter2_x > hip_c[0] else "left"
-        else:
-            facing = None
+        #facing ("right"/"left"/None) comes from the caller, based on the fighters' game positions
 
         #PUNCH
         #Right arm
