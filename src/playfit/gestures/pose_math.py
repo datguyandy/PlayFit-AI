@@ -1,5 +1,4 @@
 import numpy as np
-from collections import deque
 
 def xy(landmarks):
     return np.array([landmarks.x, landmarks.y], dtype=np.float32)

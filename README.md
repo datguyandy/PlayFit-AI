@@ -53,10 +53,16 @@ Add a new one with `uv add <package>`.
 
 ## ▶️ Run the Game
 
-From the project root (asset paths are relative to it):
+```bash
+uv run playfit
+```
+
+The game is installed as the `playfit` package (source in `src/playfit/`), so this works from any directory. Press `q` in the camera window or close the game window to quit.
+
+To check your webcam and pose tracking on their own:
 
 ```bash
-uv run python src/game/main.py
+uv run playfit-pose-demo
 ```
 
 Make sure your webcam is connected 📸
@@ -67,7 +73,7 @@ Make sure your webcam is connected 📸
 
 ### 🧍 Pose Controls (Primary)
 Gesture detection rules live here:
-src/gestures/rules.py
+src/playfit/gestures/rules.py
 
 
 This is where body poses are mapped to actions like:
@@ -80,16 +86,19 @@ You can tweak angles, distances, and thresholds to improve accuracy.
 
 ### ⌨️ Keyboard Controls (Fallback)
 Keyboard input logic:
-src/game/input_keyboard.py
+src/playfit/game/input_keyboard.py
 
-Useful for debugging without a webcam.
+- ← / → move, ↑ jump
+- `R` punch, `T` kick
+
+Always active alongside pose input, so the game is playable without a webcam.
 
 ---
 
 ## 🧠 How It Works
 
-1. Webcam captures video frames  
-2. Pose landmarks are extracted  
+1. A background thread captures webcam frames (`src/playfit/vision/pose_camera.py`)  
+2. Pose landmarks are extracted on that thread, so the game loop never waits on the camera  
 3. Angles & distances are computed  
 4. Gesture rules classify movements  
 5. Game loop applies actions & renders sprites  

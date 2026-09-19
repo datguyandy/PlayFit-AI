@@ -1,8 +1,8 @@
 import random
 import time
 
-from fighters import IDLE, PUNCH, KICK, Fighter
-from actions import Actions
+from .fighters import Fighter
+from .actions import Actions
 
 class FighterAI(Fighter):
     def __init__(self, x, y):
@@ -34,10 +34,6 @@ class FighterAI(Fighter):
             self.move_timer -= 1
 
         grace_period_active = (time.time() - self.start_time) < self.grace_period
-
-        if self.jump_cooldown == 0 and not self.attacking and random.random() < 0.002:
-            actions.jump = True
-            self.jump_cooldown = 60 
 
         #random jumping
         if self.jump_cooldown == 0 and not self.attacking and random.random() < 0.02:

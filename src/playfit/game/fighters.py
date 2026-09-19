@@ -1,5 +1,10 @@
+from pathlib import Path
+
 import pygame
-from actions import Actions
+from .actions import Actions
+
+#assets/ lives at the repo root, next to src/
+ASSETS_DIR = Path(__file__).resolve().parents[3] / "assets"
 
 GRAVITY = 2 
 JUMP_VELOCITY = -30
@@ -47,19 +52,19 @@ class Fighter():
 
         if self.variant == "bot":
             paths = {
-                IDLE: "assets/sprites/Fighter2/Bot-IDLE.png",
-                PUNCH: "assets/sprites/Fighter2/Bot-punch.png",
-                KICK: "assets/sprites/Fighter2/Bot-kick.png",
-                WIN: "assets/sprites/Fighter2/Bot-IDLE.png", #no bot win sprite yet
-                DEAD: "assets/sprites/Fighter2/Bot-over.png",
+                IDLE: ASSETS_DIR / "sprites/Fighter2/Bot-IDLE.png",
+                PUNCH: ASSETS_DIR / "sprites/Fighter2/Bot-punch.png",
+                KICK: ASSETS_DIR / "sprites/Fighter2/Bot-kick.png",
+                WIN: ASSETS_DIR / "sprites/Fighter2/Bot-IDLE.png", #no bot win sprite yet
+                DEAD: ASSETS_DIR / "sprites/Fighter2/Bot-over.png",
             }
         else:
             paths = {
-                IDLE: "assets/sprites/Fighter1/Shinchan-idle.png",
-                PUNCH: "assets/sprites/Fighter1/Shinchan-punch.png",
-                KICK: "assets/sprites/Fighter1/Shinchan-kick.png",
-                WIN: "assets/sprites/Fighter1/Shinchan-win.png",
-                DEAD: "assets/sprites/Fighter1/Shinchan-over.png",
+                IDLE: ASSETS_DIR / "sprites/Fighter1/Shinchan-idle.png",
+                PUNCH: ASSETS_DIR / "sprites/Fighter1/Shinchan-punch.png",
+                KICK: ASSETS_DIR / "sprites/Fighter1/Shinchan-kick.png",
+                WIN: ASSETS_DIR / "sprites/Fighter1/Shinchan-win.png",
+                DEAD: ASSETS_DIR / "sprites/Fighter1/Shinchan-over.png",
             }
 
         #IDLE (3 frames)

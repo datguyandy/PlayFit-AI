@@ -1,6 +1,6 @@
 from collections import deque
 import mediapipe as mp
-from pose_math import xy, distance, angle, avg, visible_enough
+from .pose_math import xy, distance, angle, visible_enough
 
 mp_pose = mp.solutions.pose
 
@@ -39,8 +39,6 @@ class ActionDetector:
         #centers for lean and facing
         lh = xy(landmarks[mp_pose.PoseLandmark.LEFT_HIP.value])
         rh = xy(landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value])
-        hip_c = avg(lh, rh)
-        sh_c = avg(ls, rs)
 
         #facing ("right"/"left"/None) comes from the caller, based on the fighters' game positions
 
@@ -132,8 +130,6 @@ class ActionDetector:
             if knee_angle_val > KNEE_ANGLE_MAX: 
                 return False
             
-            print(f"Kick check - Lift: {lift_amount:.3f}, Angle: {knee_angle_val:.1f}°")
-
             return True
             
         if self.cooldown["kick"] == 0:
@@ -184,8 +180,6 @@ class ActionDetector:
                             actions.append("JUMP")
                             self.cooldown["jump"] = 15  # Longer cooldown for jumps
                             self.ankle_height_history.clear()
-                            print(f"Jump detected! Height: {height_above_base:.3f}, Velocity: {ankle_vy:.3f}")
-
 
         #Movement detection
         ls_landmark = landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value]
@@ -201,8 +195,6 @@ class ActionDetector:
                 if left_hand_high and right_hand_low:
                     actions.append("MOVE_LEFT")
                     self.cooldown["move_left"] = 1
-                    print("MOVE_LEFT DETECTED")
-
         if self.cooldown["move_right"] == 0:
             if visible_enough([rs_landmark.visibility, r_w_landmark.visibility], threshold=0.5):
                 right_hand_high = (r_w_landmark.y < rs[1] - 0.05)
@@ -211,11 +203,6 @@ class ActionDetector:
                 if right_hand_high and left_hand_low:
                     actions.append("MOVE_RIGHT")
                     self.cooldown["move_right"] = 1
-                    print("MOVE_RIGHT DETECTED")
-
-        if actions:
-            print(f"All detected actions: {actions}")
-
         self.cooldowns()
         return actions
     

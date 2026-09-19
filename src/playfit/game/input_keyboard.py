@@ -1,10 +1,9 @@
 import pygame
-from actions import Actions
+from .actions import Actions
 
 def get_actions_player1() -> Actions:
     key = pygame.key.get_pressed()
 
-        #movement
     #movement
     movex = 0
     if key[pygame.K_LEFT]:
