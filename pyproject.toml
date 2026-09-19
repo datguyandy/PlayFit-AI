@@ -1,0 +1,17 @@
+[project]
+name = "playfit-ai"
+version = "0.1.0"
+description = "Pose-controlled fighting game using MediaPipe, OpenCV and pygame"
+readme = "README.md"
+license = { file = "LICENSE" }
+# mediapipe 0.10.21 only ships wheels for Python 3.9-3.12
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "numpy<2",
+    "opencv-contrib-python==4.11.0.86",
+    "mediapipe==0.10.21",
+    "pygame>=2.5",
+]
+
+[tool.uv]
+package = false

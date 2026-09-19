@@ -26,46 +26,38 @@ Move your body. Fight the bot. Win the match. 💥
 ---
 ## 🧪 Environment Setup
 
-This project uses a Python virtual environment named:
+This project uses [uv](https://docs.astral.sh/uv/) for Python and dependency management.
 
-### 🟢 `Streetfighter`
+Install uv (once), then from the project root:
 
-### Create the environment:
-python -m venv Streetfighter
+```bash
+uv sync
+```
 
-### Activate the environment
-
-**macOS / Linux:**
-source Streetfighter/bin/activate
-
-**Windows:**
-Streetfighter\Scripts\activate
+This creates `.venv/`, installs Python 3.12 if needed (mediapipe 0.10.21 does not support 3.13+), and installs the locked dependencies from `uv.lock`.
 
 ---
 
 ## 📦 Dependencies
 
-Main libraries used:
+Declared in `pyproject.toml`:
 
 - numpy<2
 - opencv-contrib-python==4.11.0.86
 - mediapipe==0.10.21
-- pygame 
+- pygame
 
-Install everything with:
-pip install -r requirements.txt
+Add a new one with `uv add <package>`.
 
 ---
 
 ## ▶️ Run the Game
 
-From the project root:
+From the project root (asset paths are relative to it):
 
-python -m src.game.main
-
-If imports fail, try:
-python src/game/main.py
-
+```bash
+uv run python src/game/main.py
+```
 
 Make sure your webcam is connected 📸
 
